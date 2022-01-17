@@ -56,7 +56,7 @@ module.exports = {
     },
 
     Create: async (params) => {
-  
+        
         return prisma.user.create({
             data: {
                 ...params,

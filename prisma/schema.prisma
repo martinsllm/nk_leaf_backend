@@ -57,6 +57,7 @@ model user {
   endereco                     Int
   atribuicao                   Int
   permissao                    Boolean
+  whatss                       String?     @db.VarChar
   atribuicao_atribuicaoTouser  atribuicao  @relation(fields: [atribuicao], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_fk_1")
   endereco_enderecoTouser      endereco    @relation(fields: [endereco], references: [id], onDelete: Cascade, map: "user_fk")
   foto_user                    foto_user[]
