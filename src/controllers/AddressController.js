@@ -5,10 +5,10 @@ module.exports = {
     async List(req, res) {
         try {
             const addresses = await AddressData.List();
-    
+
             return res.json(addresses);
         } catch (error) {
-            return res.status(500).json({'ERROR': error.message});
+            return res.status(500).json({ 'ERROR': error.message });
         }
     },
 
@@ -18,12 +18,12 @@ module.exports = {
 
             const address = await AddressData.ListOne(id)
 
-            if(!address) return res.status(404).json({ERROR: 'Endereço não localizado!'});
-    
+            if (!address) return res.status(404).json({ ERROR: 'Endereço não localizado!' });
+
             return res.json(address);
 
         } catch (error) {
-            return res.status(500).json({'ERROR': error.message});
+            return res.status(500).json({ 'ERROR': error.message });
         }
     },
 
@@ -31,19 +31,19 @@ module.exports = {
         try {
             const { rua, cidade, estado, cep, numero } = req.body;
 
-            const address = await AddressData.ListFirst({...req.body})
+            const address = await AddressData.ListFirst({ ...req.body })
 
-            if(address) return res.status(409).json({'ERROR': 'Endereço já registrado!'})
+            if (address) return res.status(409).json({ 'ERROR': 'Endereço já registrado!' })
 
-            if(rua === "" || cidade === "" || estado === "" || cep === "" || numero === "")
-                return res.status(400).json({'ERROR': 'Um ou mais campos vazios!'})
-            
-            await AddressData.Create({...req.body})
-    
-            return res.status(201).json();
+            if (rua === "" || cidade === "" || estado === "" || cep === "" || numero === "")
+                return res.status(400).json({ 'ERROR': 'Um ou mais campos vazios!' })
+
+            const response = await AddressData.Create({ ...req.body })
+            console.log(response.id)
+            return res.status(201).json(response.id);
 
         } catch (error) {
-            return res.status(500).json({'ERROR': error.message});
+            return res.status(500).json({ 'ERROR': error.message });
         }
     },
 
@@ -54,17 +54,17 @@ module.exports = {
 
             const address = await AddressData.ListOne(id);
 
-            if(!address) return res.status(404).json({ERROR: 'Endereço não localizado!'});
+            if (!address) return res.status(404).json({ ERROR: 'Endereço não localizado!' });
 
-            if(rua === "" || cidade === "" || estado === "" || cep === "" || numero === "")
-                return res.status(400).json({'ERROR': 'Um ou mais campos vazios!'})
-            
+            if (rua === "" || cidade === "" || estado === "" || cep === "" || numero === "")
+                return res.status(400).json({ 'ERROR': 'Um ou mais campos vazios!' })
+
             await AddressData.Update(id, req.body)
 
             return res.status(201).json();
 
         } catch (error) {
-            return res.status(500).json({'ERROR': error.message});
+            return res.status(500).json({ 'ERROR': error.message });
         }
     },
 
@@ -74,14 +74,14 @@ module.exports = {
 
             const address = await AddressData.ListOne(id);
 
-            if(!address) return res.status(404).json({ERROR: 'Endereço não localizado!'});
+            if (!address) return res.status(404).json({ ERROR: 'Endereço não localizado!' });
 
             await AddressData.Delete(id);
 
             return res.status(204).json();
 
         } catch (error) {
-            return res.status(500).json({'ERROR': error.message});
+            return res.status(500).json({ 'ERROR': error.message });
         }
     }
 }
