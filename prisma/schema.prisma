@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model endereco {
+  id     Int    @id(map: "endereco_pk") @default(autoincrement())
+  rua    String @db.VarChar
+  cidade String @db.VarChar
+  estado String @db.VarChar
+  cep    String @db.VarChar
+  numero String @db.VarChar
+  user   user[]
+}
+
+model foto_pedido {
+  id                         Int      @id(map: "foto_pedido_pk") @default(autoincrement())
+  nome                       String   @db.VarChar
+  url                        String   @db.VarChar
+  pedido                     Int
+  createdAt                  DateTime @default(now())
+  pedido_foto_pedidoTopedido pedido   @relation(fields: [pedido], references: [id_pedido], onDelete: Cascade, map: "foto_pedido_fk")
+}
+
+model foto_user {
+  id                   Int      @id(map: "foto_user_pk") @default(autoincrement())
+  nome                 String   @db.VarChar
+  url                  String   @db.VarChar
+  user                 Int
+  createdAt            DateTime @default(now())
+  user_foto_userTouser user     @relation(fields: [user], references: [id_user], onDelete: Cascade, map: "foto_user_fk")
+}
+
+model pedido {
+  id_pedido                  Int           @id(map: "pedido_pk") @default(autoincrement())
+  descricao                  String        @db.VarChar
+  data                       String        @db.VarChar
+  paleta_cores               String        @db.VarChar
+  user                       Int
+  designer                   Int
+  pronto                     Boolean
+  user_pedido_designerTouser user          @relation("pedido_designerTouser", fields: [designer], references: [id_user], onDelete: Cascade, map: "pedido_fk_1")
+  user_pedidoTouser          user          @relation(fields: [user], references: [id_user], onDelete: Cascade, map: "pedido_fk")
+  foto_pedido                foto_pedido[]
+}
+
+model user {
+  id_user                      Int         @id(map: "user_pk") @default(autoincrement())
+  nome_completo                String      @unique(map: "user_un") @db.VarChar
+  email                        String      @unique(map: "user_un_1") @db.VarChar
+  senha                        String      @db.VarChar
+  data_nascimento              String      @db.VarChar
+  endereco                     Int
+  atribuicao                   Int
+  permissao                    Boolean
+  atribuicao_atribuicaoTouser  atribuicao  @relation(fields: [atribuicao], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_fk_1")
+  endereco_enderecoTouser      endereco    @relation(fields: [endereco], references: [id], onDelete: Cascade, map: "user_fk")
+  foto_user                    foto_user[]
+  pedido_pedido_designerTouser pedido[]    @relation("pedido_designerTouser")
+  pedido                       pedido[]
+}
+
+model atribuicao {
+  id   Int    @id(map: "atribuicao_pk")
+  nome String @db.VarChar
+  user user[]
+}
