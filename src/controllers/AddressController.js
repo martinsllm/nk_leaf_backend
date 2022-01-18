@@ -40,7 +40,7 @@ module.exports = {
 
             const response = await AddressData.Create({ ...req.body })
             console.log(response.id)
-            return res.status(201).json(response.id);
+            return res.status(201).json({id:response.id});
 
         } catch (error) {
             return res.status(500).json({ 'ERROR': error.message });
