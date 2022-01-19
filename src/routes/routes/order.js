@@ -9,7 +9,7 @@ router.use(auth);
 
 router.get('/', OrderController.List);
 
-
+router.get('/accepts/:id', OrderController.ListAccepts);
 
 router.post('/', OrderController.Create);
 

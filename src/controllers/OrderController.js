@@ -1,3 +1,4 @@
+const { ListAccepts } = require('../data/OrderData');
 const OrderData = require('../data/OrderData');
 
 module.exports = {
@@ -5,6 +6,16 @@ module.exports = {
     async List(req, res) {
         try {
             const pedidos = await OrderData.List();
+
+            return res.json(pedidos);
+        } catch (error) {
+            return res.status(500).json({'ERROR': error.message});
+        }
+    },
+
+    async ListAccepts(req, res) {
+        try {
+            const pedidos = await OrderData.ListAccepts(req.params.id);
 
             return res.json(pedidos);
         } catch (error) {

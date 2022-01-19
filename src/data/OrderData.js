@@ -27,6 +27,30 @@ module.exports = {
         });
     },
 
+    ListAccepts: (id) => {
+        return prisma.pedido.findMany({
+            where: {
+                designer: Number(id)
+            },
+            include: {
+                user_pedidoTouser: {
+                    select: {
+                        nome_completo: true
+                    }
+                },
+                user_pedido_designerTouser: {
+                    select: {
+                        nome_completo: true
+                    }
+                },
+            },
+            orderBy: {
+                data: 'asc'
+            }
+        });
+    },
+
+
     ListOne: (id) => {
         return prisma.pedido.findUnique({
             where: { 
