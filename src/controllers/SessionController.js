@@ -15,8 +15,8 @@ module.exports = {
 
             if (user.email == email && bolleanPsw) {
                 return res.json({
-                    token: generateKey({ email, senha })
-                    , userPermission: user.atribuicao,
+                    token: generateKey({ email }),
+                    userPermission: user.atribuicao,
                     name: user.nome_completo
                 });
             } else {
@@ -40,7 +40,7 @@ module.exports = {
                 from: process.env.APP_MAILER_USER,
                 to: email,
                 subject: "Alteração de senha",
-                html: "<div> <p>Esqueceu sua senha? Sem problemas, recupere utilizando o token disponibilizado abaixo: </p> </hr>" + Buffer.from(email + ':' + user.senha).toString('base64') + "</div>"
+                html: "<div> <p>Esqueceu sua senha? Sem problemas, recupere utilizando o token disponibilizado abaixo: </p> </hr>" + generateKey({ email }) + "</div>"
             });
 
             return res.status(201).json();
@@ -57,7 +57,7 @@ module.exports = {
             if (!authorization) return res.status(401).json({ 'ERROR': 'Token inválido!' })
 
             const key = convertKey(authorization);
-            const email = key[0];
+            const email = key;
 
             const user = await UserData.ListEmail(email)
 
