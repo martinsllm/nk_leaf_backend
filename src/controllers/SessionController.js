@@ -14,7 +14,10 @@ module.exports = {
             const bolleanPsw = await verifyPassword(senha, user.senha)
 
             if (user.email == email && bolleanPsw) {
-                return res.json({ token: generateKey({ email, senha }) });
+                return res.json({
+                     token: generateKey({ email, senha }) 
+                     ,userPermission:user.atribuicao
+                    });
             } else {
                 throw { message: "error ao gerar code" }
             }

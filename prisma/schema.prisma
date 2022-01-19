@@ -41,9 +41,9 @@ model pedido {
   data                       String        @db.VarChar
   paleta_cores               String        @db.VarChar
   user                       Int
-  designer                   Int
+  designer                   Int?
   pronto                     Boolean
-  user_pedido_designerTouser user          @relation("pedido_designerTouser", fields: [designer], references: [id_user], onDelete: Cascade, map: "pedido_fk_1")
+  user_pedido_designerTouser user?         @relation("pedido_designerTouser", fields: [designer], references: [id_user], onDelete: Cascade, map: "pedido_fk_1")
   user_pedidoTouser          user          @relation(fields: [user], references: [id_user], onDelete: Cascade, map: "pedido_fk")
   foto_pedido                foto_pedido[]
 }
