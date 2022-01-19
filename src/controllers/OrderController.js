@@ -16,10 +16,10 @@ module.exports = {
             let list = [];
 
             for(pedido in pedidos) {
-                if((pedidos[pedido].user == user.id_user) || user.atribuicao == 2)
-                   list.push(pedidos[pedido])
+                ((pedidos[pedido].user == user.id_user) || user.atribuicao == 2) ?
+                    list.push(pedidos[pedido]) : null
             }
-            console.log(list)
+            
             return res.json(list);
         } catch (error) {
             return res.status(500).json({'ERROR': error.message});
@@ -38,12 +38,11 @@ module.exports = {
             let list = [];
 
             for(pedido in pedidos) {
-                if(pedidos[pedido].designer == user.id_user || pedidos[pedido].user == user.id_user)
-                   list.push(pedidos[pedido]);
+                (pedidos[pedido].designer == user.id_user || pedidos[pedido].user == user.id_user) ?
+                   list.push(pedidos[pedido]) : null
             }
 
             return res.json(list);
-
         } catch (error) {
             return res.status(500).json({'ERROR': error.message});
         }
@@ -57,8 +56,7 @@ module.exports = {
 
             if(!pedido) return res.status(404).json({'ERROR': 'Pedido não encontrado!'});
 
-            return res.json(pedido);
-            
+            return res.json(pedido);       
         } catch (error) {
             return res.status(500).json({'ERROR': error.message});
         }
@@ -85,7 +83,6 @@ module.exports = {
             await OrderData.Update(id, req.body)
 
             return res.status(201).json();
-
         } catch (error) {
             return res.status(500).json({'ERROR': error.message});
         }
@@ -102,7 +99,6 @@ module.exports = {
             await OrderData.Delete(id);
 
             return res.status(204).json();
-
         } catch (error) {
             return res.status(500).json({'ERROR': error.message});
         }
