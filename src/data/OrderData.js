@@ -6,6 +6,9 @@ module.exports = {
 
     List: () => {
         return prisma.pedido.findMany({
+            where: {
+                designer: null
+            },
             include: {
                 user_pedidoTouser: {
                     select: {

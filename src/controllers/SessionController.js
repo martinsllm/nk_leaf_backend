@@ -1,4 +1,4 @@
-const { generateHash, verifyPassword } = require('../config/bcrypt');
+const { verifyPassword } = require('../config/bcrypt');
 const { generateKey, convertKey } = require('../config/token');
 const mailer = require('../config/mailer');
 const UserData = require('../data/UserData');
