@@ -6,7 +6,18 @@ module.exports = {
 
     async List(req, res) {
         try {
+            const { authorization } = req.headers;
+
+            const email = convertKey(authorization);
+            const user = await UserData.ListEmail(email);
+
             const pedidos = await OrderData.List();
+
+            for(pedido in pedidos) {
+                if((pedidos[pedido].user == user.id_user) || user.atribuicao == 2)
+                    return res.json(pedidos);
+                else return res.status(401).json({'ERROR': 'Não autorizado!'})
+            }
 
             return res.json(pedidos);
         } catch (error) {
