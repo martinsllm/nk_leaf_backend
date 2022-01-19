@@ -13,13 +13,14 @@ module.exports = {
 
             const pedidos = await OrderData.List();
 
+            let list = [];
+
             for(pedido in pedidos) {
                 if((pedidos[pedido].user == user.id_user) || user.atribuicao == 2)
-                    return res.json(pedidos);
-                else return res.status(401).json({'ERROR': 'Não autorizado!'})
+                   list.push(pedidos[pedido])
             }
-
-            return res.json(pedidos);
+            console.log(list)
+            return res.json(list);
         } catch (error) {
             return res.status(500).json({'ERROR': error.message});
         }
@@ -34,11 +35,14 @@ module.exports = {
 
             const pedidos = await OrderData.ListAccepts(req.params.id);
 
+            let list = [];
+
             for(pedido in pedidos) {
                 if(pedidos[pedido].designer == user.id_user || pedidos[pedido].user == user.id_user)
-                    return res.json(pedidos);
-                else return res.status(401).json({'ERROR': 'Não autorizado!'})
+                   list.push(pedidos[pedido]);
             }
+
+            return res.json(list);
 
         } catch (error) {
             return res.status(500).json({'ERROR': error.message});
