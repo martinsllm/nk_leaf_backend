@@ -43,6 +43,9 @@ model pedido {
   user                       Int
   designer                   Int?
   pronto                     Boolean
+  local                      String?       @db.VarChar
+  titulo                     String?       @db.VarChar
+  palestrante                String?       @db.VarChar
   user_pedido_designerTouser user?         @relation("pedido_designerTouser", fields: [designer], references: [id_user], onDelete: Cascade, map: "pedido_fk_1")
   user_pedidoTouser          user          @relation(fields: [user], references: [id_user], onDelete: Cascade, map: "pedido_fk")
   foto_pedido                foto_pedido[]

@@ -15,9 +15,10 @@ module.exports = {
 
             if (user.email == email && bolleanPsw) {
                 return res.json({
-                     token: generateKey({ email, senha }) 
-                     ,userPermission:user.atribuicao
-                    });
+                    token: generateKey({ email, senha })
+                    , userPermission: user.atribuicao,
+                    name: user.nome_completo
+                });
             } else {
                 throw { message: "error ao gerar code" }
             }
