@@ -1,5 +1,6 @@
-const { ListAccepts } = require('../data/OrderData');
+const { convertKey } = require('../config/token');
 const OrderData = require('../data/OrderData');
+const UserData = require('../data/UserData');
 
 module.exports = {
 
@@ -15,9 +16,19 @@ module.exports = {
 
     async ListAccepts(req, res) {
         try {
+            const { authorization } = req.headers;
+
+            const email = convertKey(authorization);
+            const user = await UserData.ListEmail(email)
+
             const pedidos = await OrderData.ListAccepts(req.params.id);
 
-            return res.json(pedidos);
+            for(pedido in pedidos) {
+                if(pedidos[pedido].designer == user.id_user || pedidos[pedido].user == user.id_user)
+                    return res.json(pedidos);
+                else return res.status(401).json({'ERROR': 'Não autorizado!'})
+            }
+
         } catch (error) {
             return res.status(500).json({'ERROR': error.message});
         }
