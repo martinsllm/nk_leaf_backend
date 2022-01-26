@@ -30,7 +30,10 @@ module.exports = {
     ListAccepts: () => {
         return prisma.pedido.findMany({
             where: {
-                pronto: false
+                pronto: false,
+                NOT: [{
+                    designer: null
+                }]
             },
             include: {
                 user_pedidoTouser: {
