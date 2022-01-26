@@ -17,7 +17,8 @@ module.exports = {
                 return res.json({
                     token: generateKey({ email }),
                     userPermission: user.atribuicao,
-                    name: user.nome_completo
+                    name: user.nome_completo,
+                    uuid: Buffer.from(user.id_user).toString('base64')
                 });
             } else {
                 throw { message: "error ao gerar code" }
