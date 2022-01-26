@@ -8,6 +8,7 @@ router.post('/sendEmail', SessionController.SendEmail)
 router.post('/changePassword', SessionController.ChangePassword)
 
 router.use('/address', require('./routes/address'));
+router.use('/historic',require('./routes/historic'))
 router.use('/order', require('./routes/order'));
 router.use('/order-upload', require('./routes/order-upload'));
 router.use('/user', require('./routes/user'));
