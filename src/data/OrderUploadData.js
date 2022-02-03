@@ -11,7 +11,7 @@ module.exports = {
 
     ListOne: (id) => {
         return prisma.foto_pedido.findFirst({
-            where: { id: Number(id) }
+            where: { pedido: Number(id) }
         });
     },
 
